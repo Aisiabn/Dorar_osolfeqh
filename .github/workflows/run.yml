@@ -1,0 +1,41 @@
+name: osolfeqh-scraper
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "explore أو scrape"
+        required: true
+        default: "explore"
+        type: choice
+        options:
+          - explore
+          - scrape
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: تثبيت المكتبات
+        run: pip install -r requirements.txt
+
+      - name: تشغيل explore
+        if: inputs.mode == 'explore'
+        run: python explore_osolfeqh.py
+
+      - name: تشغيل scraper
+        if: inputs.mode == 'scrape'
+        run: python scraper.py
+
+      - name: رفع النتائج
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-${{ inputs.mode }}
+          path: output/
+          retention-days: 14
