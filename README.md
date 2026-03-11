@@ -1,46 +1,22 @@
 # موسوعة أصول الفقه — أرشفة شخصية
 
-أداة استخراج موسوعة أصول الفقه من [dorar.net/osolfeqh](https://dorar.net/osolfeqh) بصيغة JSON منظمة.
+## الملفات
 
-## البنية
+| الملف | الوظيفة |
+|---|---|
+| `explore_osolfeqh.py` | استكشاف بنية الموقع |
+| `scraper.py` | استخراج كامل — يُضاف بعد التقرير |
+| `requirements.txt` | المكتبات |
+| `.github/workflows/run.yml` | التنفيذ على GitHub Actions |
 
-```
-.
-├── scraper.py        # المستخرج الرئيسي
-├── exporter.py       # تحويل JSON → Markdown/CSV
-├── requirements.txt
-└── data/
-    ├── raw/          # HTML خام (اختياري)
-    └── output/       # ملفات JSON النهائية
-```
+## الاستخدام
 
-## التشغيل
+### الخطوة 1 — explore
+**Actions → osolfeqh-scraper → Run workflow → explore → Run workflow**
 
-```bash
-pip install -r requirements.txt
-python scraper.py
-```
+بعد الانتهاء: **Artifacts → output-explore → Download**
 
-الخيارات:
-```bash
-python scraper.py --delay 2        # تأخير بين الطلبات (ثانية)
-python scraper.py --raw            # حفظ HTML الخام أيضًا
-python scraper.py --resume         # استئناف من حيث توقف
-```
+افتح `explore_report.txt` وشاركه لبناء `scraper.py`.
 
-## الناتج
-
-```json
-{
-  "id": "bab-1-fasl-2",
-  "title": "تعريف أصول الفقه",
-  "path": ["الباب الأول", "الفصل الثاني"],
-  "content": "...",
-  "url": "https://dorar.net/osolfeqh/..."
-}
-```
-
-## ملاحظات
-- الأداة للأرشفة الشخصية فقط
-- تحترم `robots.txt` وتضيف تأخيرًا بين الطلبات
-- لا ترفع المحتوى المستخرج علنًا
+### الخطوة 2 — scrape (بعد إضافة scraper.py)
+نفس الخطوات، اختر **scrape**.
